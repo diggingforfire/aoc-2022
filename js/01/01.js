@@ -6,4 +6,4 @@ const groups = fs
     .split("\n\n")
     .map(line => line.split("\n").map(x => parseInt(x)).reduce((a, b) => a + b));
     
-console.log(Math.max.apply(Math, groups));
+console.log(Math.max(...groups));
