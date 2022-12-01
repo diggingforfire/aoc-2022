@@ -6,8 +6,7 @@ const sum = fs
     .split("\n\n")
     .map(line => line.split("\n").map(x => parseInt(x)).reduce((a, b) => a + b))
     .sort()
-    .reverse()
-    .slice(0, 3)
+    .slice(-3)
     .reduce((a, b) => a + b);
 
 console.log(sum);
