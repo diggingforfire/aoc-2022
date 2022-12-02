@@ -17,12 +17,10 @@ type_map_loss = {
 }
 
 def type(a, b):
-    if b == 'Y':
-        return type_map_draw[a]
-    if b == 'X':
-        return type_map_loss[a]
-    if b == 'Z':
-        return type_map_win[a]
+    match b:
+        case 'Y': return type_map_draw[a]
+        case 'X': return type_map_loss[a]
+        case 'Z': return type_map_win[a]
 
 def type_points(a):
     match a:
