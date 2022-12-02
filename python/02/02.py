@@ -16,27 +16,25 @@ type_map_loss = {
     'C': 'Y'
 }
 
+type_points = {
+    'X': 1,
+    'Y': 2,
+    'Z': 3
+}
+
+win_points = {
+    'X': 0,
+    'Y': 3,
+    'Z': 6
+}
+
 def type(a, b):
     match b:
         case 'Y': return type_map_draw[a]
         case 'X': return type_map_loss[a]
         case 'Z': return type_map_win[a]
 
-def type_points(a):
-    match a:
-        case 'X': return 1
-        case 'Y': return 2
-        case 'Z': return 3
-
-def win_points(b):
-    if b == 'X':
-        return 0
-    if b == 'Y':
-        return 3
-    if b == 'Z':
-        return 6
-
 f = open("input.txt", "r", encoding="utf-8-sig")
 nums = [n.split() for n in f.read().splitlines()]
-score = sum([type_points(type(*n)) + win_points(n[1]) for n in nums])
+score = sum([type_points[type(*n)] + win_points[n[1]] for n in nums])
 print(score)
