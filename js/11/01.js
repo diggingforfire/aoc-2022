@@ -20,7 +20,6 @@ const monkeys = fs
 const numberOfRounds = 20;
 for (let round = 1; round <= numberOfRounds; round++) {
     for (const monkey of monkeys) {
-        monkey.startingItems = monkey.startingItems.filter(i => !!i);
         for (let i = 0; i < monkey.startingItems.length; i++) {
             let old = monkey.startingItems[i];
             if (old == null) continue;
@@ -38,10 +37,9 @@ for (let round = 1; round <= numberOfRounds; round++) {
                 targetId = monkey.test.ifFalse;
             }
 
-            monkey.startingItems[i] = null;
-            const targetMonkey = monkeys.filter(m => m.id === targetId)[0];
-            targetMonkey.startingItems.push(current);
+            monkeys.filter(m => m.id === targetId)[0].startingItems.push(current);
         }   
+        monkey.startingItems = [];
     }
 }
 
