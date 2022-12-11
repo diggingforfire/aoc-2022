@@ -18,13 +18,11 @@ const monkeys = fs
     }));
 
 const biggestDivisor = monkeys.map(m => m.test.divisibleBy).reduce((a, b) => a * b);
-
 const numberOfRounds = 10000;
+
 for (let round = 1; round <= numberOfRounds; round++) {
     for (const monkey of monkeys) {
-        for (let i = 0; i < monkey.startingItems.length; i++) {
-            let old = monkey.startingItems[i];
-            if (old == null) continue;
+        for (const old of monkey.startingItems) {
 
             monkey.inspections++;
             let current = 0;
@@ -46,6 +44,6 @@ for (let round = 1; round <= numberOfRounds; round++) {
 }
 
 const inspections = monkeys.map(m => m.inspections);
-inspections.sort((a, b) => a -b);
+inspections.sort((a, b) => a - b);
 const monkeyBusiness = inspections.slice(-2).reduce((a, b) => a * b);
 console.log(monkeyBusiness);
