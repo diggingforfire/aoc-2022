@@ -5,7 +5,8 @@ My solutions for Advent of Code 2022 in C#/JavaScript/Python (whichever tickles 
 * Stick to standard libs (e.g., no nuget/npm/pip)
 * Prefer a functional approach with higher order functions over impure functions
 * No self-made utils, just code from scratch
-
+<br><br>
+## Stats
 | Day | Language   |
 |---|---|
 | 1 | JavaScript  |
