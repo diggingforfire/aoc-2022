@@ -1,4 +1,3 @@
-data class Point2(var x: Int, var y: Int)
 fun main() {
     fun getFullPath(from: Point, to: Point) : List<Point>  {
         val list = mutableListOf(from, to)

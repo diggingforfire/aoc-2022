@@ -1,5 +1,8 @@
-import java.util.*
+import kotlin.concurrent.thread
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+
 data class Point(var x: Int, var y: Int)
 data class Triangle(var p1: Point, var p2: Point, var p3: Point)
 
@@ -82,7 +85,7 @@ fun part1WithTriangles() : Int {
     return noBacons
 }
 
-fun part1(fromY: Int, toY: Int) : Any {
+fun part2(rows: Int, threads: Int) {
     val sensorsAndBacons = java.io.File("src/main/kotlin", "15.txt")
         .readText()
         .split("${System.lineSeparator()}")
@@ -99,39 +102,39 @@ fun part1(fromY: Int, toY: Int) : Any {
             var toX = it.sensor.x + manhattan
         }}
 
-    var sum = 0
+    val chunkSize = rows / threads
+    for (i in 0 until threads) {
+        thread {
+            for (y in i * chunkSize until (i+1) * chunkSize) {
+                val arr = BooleanArray(rows)
+                for (snb in sensorsAndBacons) {
+                    if (y in snb.minY..snb.maxY) {
+                        val dY = abs(snb.sensor.y - y)
+                        val range = max(snb.fromX + dY, 0)..min(snb.toX - dY, rows - 1)
+                        for (x in range) arr[x] = true
+                    }
+                }
 
+                val sbs = sensorsAndBacons.map{it.sensor} + sensorsAndBacons.map{it.bacon}
+                val snbsToRemove = sbs.filter{it.y == y}.distinctBy { it.x }.map{ it.x}
 
-    for (y in fromY..toY) {
-        println(y)
-        val xs = mutableListOf<IntRange>()
+                for (x in snbsToRemove) {
+                    if (x in 0 until rows) {
+                        arr[x] = true
+                    }
+                }
 
-        for (snb in sensorsAndBacons) {
-            if (y in snb.minY..snb.maxY) {
-                val dY = abs(snb.sensor.y - y)
-                val range = snb.fromX + dY..snb.toX - dY
-                xs.add(range)
+                val theX = arr.indexOfFirst { !it }
+                if (theX != -1 ) {
+                    print(theX.toULong() * rows.toULong() + y.toULong())
+                    return@thread
+                }
             }
         }
-
-        val minX = xs.minOf { it.first }
-        val maxX = xs.maxOf { it.last }
-
-        var xor = 0
-        for (x in minX..maxX) {
-            
-        }
-        val sbs = sensorsAndBacons.map{it.sensor} + sensorsAndBacons.map{it.bacon}
-        val snbsToRemove = sbs.filter{it.y == y}.distinctBy { it.x }
-
     }
-
-
-
-    return sum
 }
 
 fun main() {
     println(part1WithTriangles())
-    println(part1(0, 20))
+    part2(4000000, 20)
 }
