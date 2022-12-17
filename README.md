@@ -25,7 +25,7 @@ My solutions for Advent of Code 2022 in C#/JavaScript/Python (whichever tickles 
 | 14 | Kotlin   |
 | 15 | Kotlin  |
 | 16 |   |
-| 17 |   |
+| 17 | Kotlin  |
 | 18 |   |
 | 19 |   |
 | 20 |   |
