@@ -1,11 +1,11 @@
-fun solve(maxBricks: Int, visualize: Boolean) : Int {
+fun solve(maxBricks: ULong, visualize: Boolean, showProgress: Boolean) : Int {
     val pattern = java.io.File("src/main/kotlin", "17.txt").readText().toCharArray()
 
     val bricks = getBricks()
     var currentBrick: Array<CharArray>
     var jet: Char
 
-    val cave = mutableListOf (
+    var cave = mutableListOf (
         charArrayOf('.', '.', '.', '.', '.', '.', '.'),
         charArrayOf('.', '.', '.', '.', '.', '.', '.'),
         charArrayOf('.', '.', '.', '.', '.', '.', '.'),
@@ -13,9 +13,24 @@ fun solve(maxBricks: Int, visualize: Boolean) : Int {
     )
 
     var jetCounter = 0
+    for (round in 0UL until maxBricks) {
+        if (showProgress) {
+            if (round % (maxBricks / 100UL) == 0UL) {
+                println("${(round.toFloat()/maxBricks.toFloat()) * 100}%")
+            }
+        }
 
-    for (round in 0 until maxBricks) {
-        currentBrick = bricks[(round % bricks.size)]
+        for (i in cave.indices) {
+            if (cave[i].all { it == '#' }) {
+                println("Floor detected at row ${i+1} - round $round")
+                //println(getHighest(cave))
+
+                //cave = cave.drop(i + 1).toMutableList()
+                return 0
+            }
+        }
+
+        currentBrick = bricks[(((round % bricks.size.toUInt()).toInt()))]
 
         var hasLanded = false
         var offsetX = 2
@@ -26,7 +41,7 @@ fun solve(maxBricks: Int, visualize: Boolean) : Int {
             createBrick(offsetY, currentBrick, offsetX, cave, false)
 
             // push
-            jet = pattern[jetCounter % pattern.size]
+            jet = pattern[(jetCounter % pattern.size.toLong()).toInt()]
 
             if (jet == '>' && offsetX + currentBrick[0].size + 1 <= 7 && !willCollideHorizontally(1, offsetY, currentBrick.size, cave))  {
                 offsetX++
@@ -51,6 +66,8 @@ fun solve(maxBricks: Int, visualize: Boolean) : Int {
 
     return getHighest(cave)
 }
+
+
 
 fun createBrick(
     offsetY: Int,
@@ -167,9 +184,13 @@ fun willCollideVertically(offsetY: Int, currentBrickSize: Int, cave: MutableList
     return false
 }
 fun part1() {
-    println(solve(2022, false))
+    println(solve(2022UL, false, true))
+}
+fun part2() {
+    println(solve(1000000000000UL, false, true))
 }
 
 fun main() {
-    part1()
+    //part1()
+    part2()
 }
