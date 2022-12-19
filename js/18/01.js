@@ -32,7 +32,7 @@ var groupBy = function(xs, key) {
       (rv[x[key]] = rv[x[key]] || []).push(x);
       return rv;
     }, {});
-  };
+};
 
 const cubes = fs
     .readFileSync(path.join(__dirname, "input.txt"), "utf8")
