@@ -30,10 +30,7 @@ fun solve(decryptionKey: Int, mixes: Int) : Long {
                     target = target.next!!
                 }
                 if (target == number) continue
-                val previous = number.previous
-                val next = number.next
-                previous?.next = next
-                next?.previous = previous
+                remove(number)
 
                 val newNext = target.next
 
@@ -47,10 +44,7 @@ fun solve(decryptionKey: Int, mixes: Int) : Long {
                     target = target.next!!
                 }
                 if (target == number) continue
-                val previous = number.previous
-                val next = number.next
-                previous?.next = next
-                next?.previous = previous
+                remove(number)
 
                 val newPrevious = target.previous
 
@@ -74,6 +68,13 @@ fun solve(decryptionKey: Int, mixes: Int) : Long {
     }
 
     return sum
+}
+
+private fun remove(number: Number) {
+    val previous = number.previous
+    val next = number.next
+    previous?.next = next
+    next?.previous = previous
 }
 
 fun main() {
